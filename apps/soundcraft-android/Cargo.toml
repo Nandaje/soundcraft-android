@@ -1,0 +1,45 @@
+[package]
+name = "soundcraft-android"
+description = "SoundCraft on Android (wgpu Vulkan/GLES hardware acceleration, SAF + runtime storage/audio permissions for import/export)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+
+[lib]
+name = "soundcraft_android"
+crate-type = ["cdylib", "rlib"]
+
+# Only the Android JNI/Activity entrypoint (`android_entry.rs`) uses `#[unsafe(no_mangle)]` and JNI
+# pointers; every other module in this crate is 100% safe Rust.
+[lints.rust]
+unsafe_code = "deny"
+
+[lints.clippy]
+dbg_macro = "warn"
+todo = "warn"
+too_many_arguments = "allow"
+type_complexity = "allow"
+
+[dependencies]
+soundcraft-time = { workspace = true }
+soundcraft-audio-io = { workspace = true }
+soundcraft-midi = { workspace = true }
+soundcraft-video = { workspace = true }
+soundcraft-dsp = { workspace = true }
+soundcraft-model = { workspace = true }
+soundcraft-mix = { workspace = true }
+soundcraft-engine = { workspace = true }
+soundcraft-playback = { workspace = true }
+soundcraft-ui-egui = { workspace = true }
+eframe = { workspace = true, features = ["default_fonts", "wgpu"] }
+egui = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+log = { workspace = true }
+
+[target.'cfg(target_os = "android")'.dependencies]
+eframe = { workspace = true, features = ["default_fonts", "wgpu", "android-native-activity"] }
+android-activity = { version = "=0.6.1", default-features = false, features = ["native-activity"] }
+jni = "=0.22.4"
+ndk = { version = "=0.9.0", default-features = false }

@@ -3589,6 +3589,30 @@ dependencies = [
 ]
 
 [[package]]
+name = "soundcraft-android"
+version = "0.11.0"
+dependencies = [
+ "android-activity",
+ "eframe",
+ "egui",
+ "jni 0.22.4",
+ "log",
+ "ndk",
+ "serde",
+ "serde_json",
+ "soundcraft-audio-io",
+ "soundcraft-dsp",
+ "soundcraft-engine",
+ "soundcraft-midi",
+ "soundcraft-mix",
+ "soundcraft-model",
+ "soundcraft-playback",
+ "soundcraft-time",
+ "soundcraft-ui-egui",
+ "soundcraft-video",
+]
+
+[[package]]
 name = "soundcraft-au-host"
 version = "0.11.0"
 dependencies = [

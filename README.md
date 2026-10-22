@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  A complete digital audio workstation that runs natively on macOS, Windows, Linux and FreeBSD, and
+  A complete digital audio workstation that runs natively on macOS, Windows, Linux, FreeBSD, Android, and
   in the browser. Multitrack editing, a full mixer with plugins, sends and automation, MIDI, recording
   and bouncing, and every action scriptable from the command line or by an AI agent.
 </p>
@@ -22,7 +22,7 @@
 <p align="center">
   <img alt="Rust" src="https://img.shields.io/badge/100%25-Rust-b7410e?style=flat-square&logo=rust">
   <img alt="egui" src="https://img.shields.io/badge/UI-egui-14a9c4?style=flat-square">
-  <img alt="Platforms" src="https://img.shields.io/badge/macOS%20%C2%B7%20Windows%20%C2%B7%20Linux%20%C2%B7%20FreeBSD%20%C2%B7%20Web-0b7385?style=flat-square">
+  <img alt="Platforms" src="https://img.shields.io/badge/macOS%20%C2%B7%20Windows%20%C2%B7%20Linux%20%C2%B7%20FreeBSD%20%C2%B7%20Android%20%C2%B7%20Web-0b7385?style=flat-square">
   <img alt="License: MIT OR Apache-2.0" src="https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue?style=flat-square">
   <img alt="Status: pre-alpha" src="https://img.shields.io/badge/status-pre--alpha-orange?style=flat-square">
   <br>
@@ -319,6 +319,18 @@ RISC-V (riscv64): `soundcraft-<ver>-linux-riscv64.tar.gz`, a tarball only (glibc
 | Build | File | Notes |
 |---|---|---|
 | Static site | `soundcraft-web-<ver>.zip` | Runs in a modern browser; host it on any static server |
+
+### Android
+
+| Build | File | Notes |
+|---|---|---|
+| Android APK (`arm64-v8a`) | [`soundcraft-android-v0.11.0-arm64-v8a.apk`](https://github.com/Nandaje/soundcraft-android/releases/download/v0.11.0-android/soundcraft-android-v0.11.0-arm64-v8a.apk) | Hardware GPU acceleration (`wgpu` Vulkan 1.1+ / OpenGL ES 3.0+) + runtime file permissions & SAF for import/export (`packaging/android/`) |
+
+## Contributors (Android Port)
+
+- **[Antigravity](https://github.com/AntiGravity)** ([`@google-antigravity`](https://github.com/google-antigravity)) — Android native port (`apps/soundcraft-android`), `wgpu` Vulkan 1.1+ / OpenGL ES 3.0+ GPU acceleration & crash-safe fallback, Android runtime storage & audio permissions (`READ_EXTERNAL_STORAGE`, `WRITE_EXTERNAL_STORAGE`, `READ_MEDIA_AUDIO`, `READ_MEDIA_VIDEO`, `MANAGE_EXTERNAL_STORAGE`, `RECORD_AUDIO`), Storage Access Framework (SAF) & touch file manager integration, and APK packaging.
+- **[Nandaje](https://github.com/Nandaje)** — Project maintainer & Android release distribution.
+- **[ArtCraft / Storytold Team](https://github.com/storytold/soundcraft)** — Original SoundCraft engine and desktop/web application.
 
 ## The Crafting Apps
 
