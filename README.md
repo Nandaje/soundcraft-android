@@ -328,7 +328,7 @@ RISC-V (riscv64): `soundcraft-<ver>-linux-riscv64.tar.gz`, a tarball only (glibc
 
 | Build | File | Notes |
 |---|---|---|
-| Android APK (`arm64-v8a`) | [`soundcraft-android-v0.11.0-arm64-v8a.apk`](https://github.com/Nandaje/soundcraft-android/releases/download/v0.11.0-android/soundcraft-android-v0.11.0-arm64-v8a.apk) | Hardware GPU acceleration (`wgpu` Vulkan 1.1+ / OpenGL ES 3.0+) + runtime file permissions & SAF for import/export (`packaging/android/`) |
+| Android APK (`arm64-v8a`) | [`soundcraft-android-v0.12.1-arm64-v8a.apk`](https://github.com/Nandaje/soundcraft-android/releases/download/v0.12.1-android/soundcraft-android-v0.12.1-arm64-v8a.apk) | Hardware GPU acceleration (`wgpu` Vulkan 1.1+ / OpenGL ES 3.0+) + runtime file permissions & SAF for import/export (`packaging/android/`) |
 
 ## Contributors (Android Port)
 

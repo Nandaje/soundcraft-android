@@ -12,8 +12,8 @@ android {
         applicationId = "ai.storyteller.soundcraft"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1100
-        versionName = "0.11.0"
+        versionCode = 1201
+        versionName = "0.12.1"
 
         ndk {
             abiFilters += listOf("arm64-v8a")

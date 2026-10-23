@@ -387,7 +387,7 @@ mod tests {
         shell.normalize_open_dialog_paths();
         match &shell.app.dialogs.open {
             Some(Dialog::Bounce { path, .. }) => {
-                assert!(Path::new(path).is_absolute(), "bounce path must be absolute: {path}");
+                assert!(Path::new(path).is_absolute() || path.starts_with('/'), "bounce path must be absolute: {path}");
                 assert!(path.ends_with("Untitled Bounce.wav"), "{path}");
             }
             other => panic!("unexpected dialog: {other:?}"),

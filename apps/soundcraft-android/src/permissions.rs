@@ -125,7 +125,7 @@ impl AndroidDirs {
     /// Default directory to suggest when exporting/bouncing/saving files.
     pub fn default_save_dir(&self) -> PathBuf {
         for candidate in [&self.downloads, &self.music, &self.documents] {
-            if is_dir_writable(candidate) {
+            if candidate.is_dir() && is_dir_writable(candidate) {
                 return candidate.clone();
             }
         }
