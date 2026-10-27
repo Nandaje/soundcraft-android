@@ -188,7 +188,8 @@ impl AndroidShell {
             self.app.run("file.import_clip_groups", json!({"path": p, "at": at}))
         } else {
             let at = self.app.engine.session().edit.selection.start;
-            self.app.run("file.import_audio", json!({"path": p, "at": at}))
+            soundcraft_ui_egui::import::start(&mut self.app, json!({"path": p, "at": at}));
+            Ok(serde_json::Value::Null)
         };
         if let Err(e) = r {
             log::warn!("{p}: {e}");
@@ -293,9 +294,9 @@ pub fn drop_touch_twins(raw: &mut egui::RawInput) {
 }
 
 impl eframe::App for AndroidShell {
-    fn raw_input_hook(&mut self, _ctx: &egui::Context, raw: &mut egui::RawInput) {
+    fn raw_input_hook(&mut self, ctx: &egui::Context, raw: &mut egui::RawInput) {
         drop_touch_twins(raw);
-        self.app.raw_input_hook(raw);
+        self.app.raw_input_hook(ctx, raw);
     }
 
     fn logic(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
@@ -332,7 +333,7 @@ impl eframe::App for AndroidShell {
 
         // Handle files dropped onto the window
         let dropped: Vec<String> =
-            self.app.take_dropped_files(ctx).iter().map(|f| f.path().to_string_lossy().into_owned()).filter(|s| !s.is_empty()).collect();
+            self.app.take_dropped_files().iter().map(|f| f.path().to_string_lossy().into_owned()).filter(|s| !s.is_empty()).collect();
         for p in dropped {
             self.open_or_import_path("", &p);
         }
@@ -383,6 +384,7 @@ mod tests {
             format: "wav".into(),
             bit_depth: "24".into(),
             normalize: false,
+            dither: false,
         });
         shell.normalize_open_dialog_paths();
         match &shell.app.dialogs.open {

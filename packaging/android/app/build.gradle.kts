@@ -6,14 +6,14 @@ plugins {
 android {
     namespace = "ai.storyteller.soundcraft"
     compileSdk = 34
-    ndkVersion = "27.0.12077973"
+    ndkVersion = "26.1.10909125"
 
     defaultConfig {
         applicationId = "ai.storyteller.soundcraft"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1201
-        versionName = "0.12.1"
+        versionCode = 1301
+        versionName = "0.13.1"
 
         ndk {
             abiFilters += listOf("arm64-v8a")

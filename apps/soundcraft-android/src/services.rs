@@ -66,11 +66,14 @@ pub fn load_ui_prefs(path: &Path) -> Result<Option<UiState>, String> {
         return Err("Settings file exceeds the 4 MiB limit".into());
     }
     let mut saved: serde_json::Value = serde_json::from_slice(&bytes).map_err(|error| format!("Settings could not be restored: {error}"))?;
+    soundcraft_ui_egui::docking::reset_old_layouts(&mut saved);
     if let Some(fields) = saved.as_object_mut() {
         for (field, mix) in [("docking", false), ("mix_docking", true)] {
             let unreadable = fields.get(field).is_some_and(|value| {
                 match serde_json::from_value::<soundcraft_ui_egui::docking::Workspace>(value.clone()) {
-                    Ok(workspace) => if mix { workspace.validate_mix() } else { workspace.validate() }.is_err(),
+                    Ok(workspace) => {
+                        if mix { soundcraft_ui_egui::docking::validate_mix(&workspace) } else { soundcraft_ui_egui::docking::validate(&workspace) }.is_err()
+                    }
                     Err(_) => true,
                 }
             });
@@ -80,19 +83,20 @@ pub fn load_ui_prefs(path: &Path) -> Result<Option<UiState>, String> {
         }
     }
     let state: UiState = serde_json::from_value(saved).map_err(|error| format!("Settings could not be restored: {error}"))?;
-    state.docking.validate()?;
-    state.mix_docking.validate_mix()?;
+    soundcraft_ui_egui::docking::validate(&state.docking)?;
+    soundcraft_ui_egui::docking::validate_mix(&state.mix_docking)?;
     Ok(Some(state))
 }
 
 /// Save [`UiState`] preferences atomically to `path`.
 pub fn save_ui_prefs(path: &Path, ui: &UiState) -> Result<(), String> {
     use std::io::Write as _;
-    ui.docking.validate()?;
-    ui.mix_docking.validate_mix()?;
+    soundcraft_ui_egui::docking::validate(&ui.docking)?;
+    soundcraft_ui_egui::docking::validate_mix(&ui.mix_docking)?;
     let mut saved = ui.clone();
     saved.plugin_windows.clear();
     saved.status.clear();
+    saved.docking_version = soundcraft_ui_egui::docking::LAYOUT_VERSION;
     let bytes = serde_json::to_vec_pretty(&saved).map_err(|error| error.to_string())?;
     if bytes.len() as u64 > MAX_UI_BYTES {
         return Err("Settings exceed the 4 MiB limit".into());

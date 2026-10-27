@@ -338,7 +338,7 @@ pub fn render_modal(ctx: &egui::Context) {
     let mut finish_outcome: Option<Option<FileDialogOutcome>> = None;
 
     egui::Window::new(title)
-        .id(egui::Id::new("soundcraft_android_file_dialog_modal"))
+        .id(egui::Id::unique("soundcraft_android_file_dialog_modal"))
         .collapsible(false)
         .resizable(true)
         .default_size([720.0, 480.0])
