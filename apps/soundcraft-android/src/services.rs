@@ -166,14 +166,18 @@ pub fn android_services() -> Services {
             });
             None
         })),
-        pick_save: Some(Box::new(|purpose: &str, default: &str| {
-            file_dialog::show_file_dialog(FileDialogRequest::Save { purpose: purpose.to_string(), suggested: default.to_string() });
+        pick_save: Some(Box::new(|purpose: &str, default: &Path| {
+            file_dialog::show_file_dialog(FileDialogRequest::Save {
+                purpose: purpose.to_string(),
+                suggested: default.to_string_lossy().into_owned(),
+            });
             None
         })),
-        pick_folder: Some(Box::new(|start: &str| {
+        pick_folder: Some(Box::new(|start: &Path| {
+            let start_str = start.to_string_lossy().into_owned();
             file_dialog::show_file_dialog(FileDialogRequest::Folder {
                 purpose: "folder".into(),
-                initial_dir: (!start.is_empty()).then(|| start.to_string()),
+                initial_dir: (!start_str.is_empty()).then_some(start_str),
             });
             None
         })),

@@ -134,9 +134,9 @@ impl AndroidShell {
                         Some(Dialog::Bounce { path, format, .. }) if purpose == "file.bounce_mix" || purpose.is_empty() => {
                             *path = resolved_str;
                             match Path::new(path.as_str()).extension().and_then(|x| x.to_str()).map(str::to_ascii_lowercase).as_deref() {
-                                Some("wav") => *format = "wav".into(),
-                                Some("aif" | "aiff") => *format = "aiff".into(),
-                                Some("flac") => *format = "flac".into(),
+                                Some("wav") => *format = soundcraft_audio_io::FileFormat::Wav,
+                                Some("aif" | "aiff") => *format = soundcraft_audio_io::FileFormat::Aiff,
+                                Some("flac") => *format = soundcraft_audio_io::FileFormat::Flac,
                                 _ => {}
                             }
                         }
@@ -381,7 +381,7 @@ mod tests {
 
         shell.app.dialogs.open = Some(Dialog::Bounce {
             path: "./Untitled Bounce.wav".into(),
-            format: "wav".into(),
+            format: soundcraft_audio_io::FileFormat::Wav,
             bit_depth: "24".into(),
             normalize: false,
             dither: false,
